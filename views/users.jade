@@ -1,0 +1,22 @@
+extends layout
+
+block content
+  h1= title
+  p Welcome to #{title}
+  
+  
+  h2 Users in the database
+  
+  ul
+    for user in users
+        li= user.name
+    else
+        li sorry, no users!
+        
+      
+  form(method="post")
+    input(type="text", placeholder="name", name="name", id="name")
+    input(type="text", placeholder="password", name="password", id="password")
+    input(type="submit", value="send")
+      
+  h3= succues

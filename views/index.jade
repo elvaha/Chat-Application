@@ -1,0 +1,24 @@
+extends layout
+
+block content
+
+    h1= 'Welcome to uChat FCK U!!'
+
+    div(class="top")
+        form(method="post")
+            input(type="text", placeholder="name", name="name", id="name")
+            input(type="submit", value="send")
+
+
+        h1 Rooms
+        p Welcome to #{title}
+    
+  
+    div(class="roomView")
+        h2 Rooms
+        for room in rooms
+            div(class="col-md-4")
+                div(class="col-md-12")
+                    a(href="/room/#{room.name}")= room.name
+        else
+            p sorry, no Rooms at the moment!

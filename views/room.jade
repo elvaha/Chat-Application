@@ -1,0 +1,19 @@
+extend layout
+
+block content
+
+    label(hidden, id="roomName")= room
+
+    h1= room
+    p Welcome to #{room}
+    
+    div(class="container")
+        div(class="chatMessages")
+            ul(id="messages")
+            
+        div(class="sendContainer")
+        form(method="post")
+            input(type="text", placeholder="message", name="message", id="message")
+            input(type="submit", class="btn btn-succes", id="sendMessage", value="send")
+            
+        
