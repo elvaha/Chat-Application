@@ -6,7 +6,7 @@ var mongoose = require('mongoose');
 var exports = module.exports = {};
 
 //Connect to database
-mongoose.connect('mongodb://localhost:5050/Uchat');
+mongoose.connect('mongodb://localhost:5050/uChat');
 exports.db = mongoose.connection;
 exports.db.on('error', console.error.bind(console, 'connection error:'));
 exports.db.once('open', function () {

@@ -8,10 +8,6 @@
      * SOCKET.IO
      * all index site socket IO things
      */
-
-
-
-
     /* GET home page. */
     router.get('/', function (req, res, next) {
         schema.Room.find({}, function (err, rooms) {
@@ -27,20 +23,39 @@
         });
     });
 
-    /* POST FROM index page */
-    router.post('/', function (req, res, next) {
-
-        var user = new schema.User(req.body);
-
-        user.save(function (err, user) {
+    router.get('/:room', function(req, res, next){
+       var room = req.params.room;
+        schema.Room.find({}, function (err, rooms) {
             if (err) {
-                return console.error(err);
+                console.log(err);
+                res.send(err);
             } else {
-                res.send('users');
+                res.render('index', {
+                    title: 'uChat',
+                    rooms: rooms,
+                    chatRoom: room
+                });
             }
         });
     });
 
+    /* POST FROM index page */
+    router.post('/createuser', function (req, res, next) {
+        console.log(req.body);
 
+        var newUser = {'name' : req.body.newname,
+            'password' : req.body.newpass
+        }
+
+        var user = new schema.User(newUser);
+        user.save(function (err, user) {
+            if (err) {
+                return console.error(err);
+            } else {
+                res.redirect('back');
+                //res.redirect(req.get('referer'));
+            }
+        });
+    });
 
 module.exports = router;

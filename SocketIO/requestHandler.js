@@ -26,10 +26,15 @@ socket.on('disconnect', function () {
 
 socket.on('sendMessage', function (data) {
     console.log('msg: ' + data);
+    socket.broadcast.emit('updateChat', data);
 });
 
-//io.on('AddUser', function (username) {
-//    socket.username = username;
-//});
+socket.on('addUser', function (username) {
+    socket.username = username;
+
+    console.log(socket.username);
+    //check if user already exist
+
+});
 
 }

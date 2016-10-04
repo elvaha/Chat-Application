@@ -9,21 +9,30 @@
 
     socket.on('connect', function () {
         console.log('Room: ' + roomName);
-
+        socket.emit('addUser', prompt("What's your name?"));
         //socket.emit('joinRoom', function (roomName) {
         //    console.log('room has been joined');
         //});
     });
 
+    $('form-login').submit(function(){
+       console.log('login clicked');
+        $('.overlay').hide();
+        return false;
+    });
 
+    $('form-create').submit(function(){
+        console.log('create clicked');
+        $('.overlay').hide();
+        return false;
+    });
 
-    $('form').submit(function () {
+    $('#show-create').click(function(){
+       $('.login').hide();
+        $('.create-user').show();
+    });
 
-        //$('<input />').attr('type', 'hidden')
-        //    .attr('name', "username")
-        //    .attr('value', socket.username)
-        //    .appendTo('form');
-
+    $('#form-send').submit(function () {
 
         console.log($('#message').val());
         $('#messages').append($('<li class="mymessage">').text('your msg: ' + $('#message').val()));
@@ -37,9 +46,13 @@
 
     });
 
-    socket.on('sendMessage', function (data) {
-        $('#messages').append($('<li>').text(data));
+    socket.on('updateChat', function (data) {
+        $('#messages').append($('<li class="message">').text(data));
     });
+
+    function switchRoom(room){
+        socket.emit('switchRoom', room);
+    };
 
 })(jQuery);
 
