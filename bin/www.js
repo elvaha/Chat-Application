@@ -7,6 +7,8 @@
 var app = require('../app');
 var debug = require('debug')('ChatApp:server');
 var http = require('http');
+var socket_io = require('socket.io');
+var io = socket_io();
 
 
 
@@ -27,7 +29,12 @@ var server = http.createServer(app);
  *Attach server to socketIO
  */
 
-app.io = app.io.listen(server);
+io.listen(server);
+
+//socket.io events
+io.on("connection", function (socket) {
+    require('../SocketIO/requestHandler')(socket);
+});
 
 
 /**

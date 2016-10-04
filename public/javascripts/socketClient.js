@@ -9,23 +9,25 @@
 
     socket.on('connect', function () {
         console.log('Room: ' + roomName);
+
+        //socket.emit('joinRoom', function (roomName) {
+        //    console.log('room has been joined');
+        //});
     });
 
-    socket.emit('joinRoom', function (roomName) {
-        console.log('room has been joined');
-    });
+
 
     $('form').submit(function () {
 
-        $('<input />').attr('type', 'hidden')
-            .attr('name', "username")
-            .attr('value', socket.username)
-            .appendTo('form');
+        //$('<input />').attr('type', 'hidden')
+        //    .attr('name', "username")
+        //    .attr('value', socket.username)
+        //    .appendTo('form');
 
 
         console.log($('#message').val());
         $('#messages').append($('<li class="mymessage">').text('your msg: ' + $('#message').val()));
-
+        console.log(socket);
         socket.emit('sendMessage', $('#message').val());
         $('#message').val('');
         return false;

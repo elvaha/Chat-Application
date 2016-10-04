@@ -1,5 +1,3 @@
-module.exports = function (io) {
-
     var express = require('express');
     var router = express.Router();
     var mongoose = require('mongoose');
@@ -11,9 +9,7 @@ module.exports = function (io) {
      * all index site socket IO things
      */
 
-    io.on('AddUser', function (username) {
-        socket.username = username;
-    });
+
 
 
     /* GET home page. */
@@ -47,6 +43,4 @@ module.exports = function (io) {
 
 
 
-
-    return router;
-}
+module.exports = router;

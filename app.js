@@ -1,17 +1,13 @@
 var express = require('express');
 var app = express();
-var socket_io = require('socket.io');
-var io = socket_io();
 var path = require('path');
 var favicon = require('serve-favicon');
 var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
-app.io = io;
-
-var routes = require('./routes/index')(app.io);
+var routes = require('./routes/index');
 var users = require('./routes/users');
-var rooms = require('./routes/room')(app.io);
+var rooms = require('./routes/room');
 
 
 // view engine setup
@@ -31,11 +27,6 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use('/', routes);
 app.use('/users', users);
 app.use('/room', rooms);
-
-// socket.io events
-io.on("connection", function (socket) {
-    console.log("We are connected");
-});
 
 
 // catch 404 and forward to error handler
