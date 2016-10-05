@@ -33,7 +33,7 @@ io.listen(server);
 
 //socket.io events
 io.on("connection", function (socket) {
-    require('../SocketIO/requestHandler')(socket);
+    require('../SocketIO/requestHandler')(socket, io);
 });
 
 

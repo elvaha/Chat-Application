@@ -3,6 +3,7 @@
     var mongoose = require('mongoose');
     var schema = require('../model/schema');
     var database = require('../model/database');
+    var db = require('../model/model')(database);
 
     /**
      * SOCKET.IO
@@ -23,8 +24,8 @@
         });
     });
 
-    router.get('/:room', function(req, res, next){
-       var room = req.params.room;
+    router.get('/:room', function (req, res, next) {
+        var room = req.params.room;
         schema.Room.find({}, function (err, rooms) {
             if (err) {
                 console.log(err);
@@ -40,11 +41,12 @@
     });
 
     /* POST FROM index page */
-    router.post('/createuser', function (req, res, next) {
+    router.post('/createUser', function (req, res, next) {
         console.log(req.body);
 
-        var newUser = {'name' : req.body.newname,
-            'password' : req.body.newpass
+        var newUser = {
+            'name': req.body.newname,
+            'password': req.body.newpass
         }
 
         var user = new schema.User(newUser);
@@ -58,4 +60,4 @@
         });
     });
 
-module.exports = router;
+    module.exports = router;

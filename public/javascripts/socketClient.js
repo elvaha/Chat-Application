@@ -6,38 +6,52 @@
 
     var socket = io();
     var roomName = $('#roomName').text();
+    var yourname = '';
 
     socket.on('connect', function () {
         console.log('Room: ' + roomName);
-        socket.emit('addUser', prompt("What's your name?"));
-        //socket.emit('joinRoom', function (roomName) {
-        //    console.log('room has been joined');
-        //});
     });
 
-    $('form-login').submit(function(){
-       console.log('login clicked');
+    $('#login').click(function () {
+        console.log('login clicked');
         $('.overlay').hide();
+
+        var username = $('#name').val();
+        var password = $('#password').val();
+
+        var data = {
+            'name': username,
+            'password': password
+        };
+        socket.emit('login', data);
+        yourname = username;
         return false;
     });
 
-    $('form-create').submit(function(){
+    $('#form-create').submit(function () {
         console.log('create clicked');
         $('.overlay').hide();
+        var username = $('#newname').val();
+        var password = $('#newpass').val();
+
+        var data = {
+            'name': username,
+            'password': password
+        };
+        socket.emit('addUser', data)
         return false;
     });
 
-    $('#show-create').click(function(){
-       $('.login').hide();
+    $('#show-create').click(function () {
+        $('.login').hide();
         $('.create-user').show();
     });
 
     $('#form-send').submit(function () {
-
-        console.log($('#message').val());
-        $('#messages').append($('<li class="mymessage">').text('your msg: ' + $('#message').val()));
+        var message = $('#message').val();
+        $('#messages').append($('<div class="mymessage col-lg-7">').text(yourname + ': ' + message));
         console.log(socket);
-        socket.emit('sendMessage', $('#message').val());
+        socket.emit('sendMessage', message);
         $('#message').val('');
         return false;
     });
@@ -46,13 +60,30 @@
 
     });
 
-    socket.on('updateChat', function (data) {
-        $('#messages').append($('<li class="message">').text(data));
+    socket.on('updateChat', function (username, data) {
+        if (username == 'SERVER') {
+            $('#messages').append($('<div class="servermessage col-lg-12">').text(username + ': ' + data));
+        } else {
+            $('#messages').append($('<div class="message col-lg-7">').text(username + ': ' + data));
+        }
+
     });
 
-    function switchRoom(room){
-        socket.emit('switchRoom', room);
-    };
+    socket.on('checkAuthenticate', function (err, data) {
+        if (data) {
+            $('.overlay').hide();
+            $('.login-hover').hide();
+        } else {
+            //handle error    
+        }
+    });
+
+    $('.roomswitch').click(function (data) {
+        var room = data.currentTarget.innerHTML;
+        $('#chatHeader').text(room);
+        socket.emit('joinRoom', room);
+        $('.chatRoom').show();
+    })
 
 })(jQuery);
 

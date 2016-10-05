@@ -3,41 +3,37 @@ extends layout
 block content
     //div(class="overlay")
     h1= 'Welcome to uChat FCK U!!'
-    //Login to see the page
-    //div(class="login-hover")
-    //    h2 You need to login or create a user
-    //    div(class="login")
-    //        form(method="post", id="form-login")
-    //            div(class="form-group")
-    //                label(for="name")
-    //                    | name
-    //                input(type="text", placeholder="name", name="name", id="name")
-    //            div(class="form-group")
-    //                label(for="password")
-    //                    |password
-    //                input(type="password", placeholder="password", name="password", id="password")
-    //
-    //            input(type="submit", value="Login", class="btn btn-success", id="login")
-    //
-    //    div(class="create-user", hidden="true")
-    //        form(method="post", id="form-create", action="/createuser")
-    //            div(class="form-group")
-    //                label(for="newname")
-    //                    | Name
-    //                input(type="text", placeholder="username", name="newname", id="newname")
-    //            div(class="form-group")
-    //                label(for="newpass")
-    //                    | password
-    //                input(type="password", placeholder="password", name="newpass", id="newpass")
-    //
-    //            input(type="submit", value="Create", class="btn btn-success", id="create_new_user")
-    //
-    //
-    //    button(class="btn btn-warning", id="show-create")
-    //        | create new user
+    Login to see the page
+    div(class="login-hover")
+        h2 You need to login or create a user
+        div(class="login")
+            div(class="form-group")
+                label(for="name")
+                    | name
+                input(type="text", placeholder="name", name="name", id="name")
+            div(class="form-group")
+                label(for="password")
+                    |password
+                input(type="password", placeholder="password", name="password", id="password")
 
-    h1 Rooms
-    p Welcome to #{title}
+            input(type="submit", value="Login", class="btn btn-success", id="login")
+    
+        div(class="create-user", hidden="true")
+            form(method="post", action="/createUser", id="form-create")
+                div(class="form-group")
+                    label(for="newname")
+                        | Name
+                    input(type="text", placeholder="username", name="newname", id="newname")
+                div(class="form-group")
+                    label(for="newpass")
+                        | password
+                    input(type="password", placeholder="password", name="newpass", id="newpass")
+
+                input(type="submit", value="Create", class="btn btn-success", id="create_new_user")
+    
+        div
+            button(class="btn btn-warning", id="show-create")
+                | create new user
     
     //Room view with all rooms
     div(class="roomView")
@@ -45,22 +41,23 @@ block content
         for room in rooms
             div(class="col-md-4")
                 div(class="col-md-12")
-                    a(href="/#{room.name}", onclick="switchRoom(#{room.name}")= room.name
+                    a(href="#", class="roomswitch")= room.name
         else
             p sorry, no Rooms at the moment!
 
     //ChatRoom field
-    if locals.chatRoom
-        div(class="chatRoom")
+    div(class="chatRoom", hidden="true")
 
-            p Welcome to #{chatRoom}
-            div(class="container")
-                div(class="chatMessages")
-                    ul(id="messages")
+        h1(id="chatHeader")
+        div(class="container col-md-10 col-md-offset-1")
+            div(class="chatMessages")
+                div(class="servermessage col-lg-12") server server
+                div(class="mymessage col-lg-6") my message
+                div(class="message col-lg-6") user message
 
-                div(class="sendContainer")
-                form(method="post", id="form-send")
-                    input(type="text", placeholder="message", name="message", id="message")
+            div(class="sendContainer col-md-10")
+            form(method="post", id="form-send")
+                div(class="col-md-10")
+                    input(type="text", class="form-control", id="message", placeholder="message", name="message")
+                div(class="col-md-2")
                     input(type="submit", class="btn btn-succes", id="sendMessage", value="send")
-    else
-        p choose a chat room
