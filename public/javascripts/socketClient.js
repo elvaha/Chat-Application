@@ -49,7 +49,7 @@
 
     $('#form-send').submit(function () {
         var message = $('#message').val();
-        $('#messages').append($('<div class="mymessage col-lg-7">').text(yourname + ': ' + message));
+        $('.chatMessages').append($('<div class="mymessage col-lg-7">').text(yourname + ': ' + message));
         console.log(socket);
         socket.emit('sendMessage', message);
         $('#message').val('');
@@ -62,9 +62,9 @@
 
     socket.on('updateChat', function (username, data) {
         if (username == 'SERVER') {
-            $('#messages').append($('<div class="servermessage col-lg-12">').text(username + ': ' + data));
+            $('.chatMessages').append($('<div class="servermessage col-lg-12">').text(username + ': ' + data));
         } else {
-            $('#messages').append($('<div class="message col-lg-7">').text(username + ': ' + data));
+            $('.chatMessages').append($('<div class="message col-lg-7">').text(username + ': ' + data));
         }
 
     });

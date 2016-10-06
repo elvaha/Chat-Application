@@ -35,7 +35,7 @@ module.exports = function (socket, io) {
 
     socket.on('sendMessage', function (data) {
         console.log('msg: ' + data);
-        io.sockets.in(socket.room).emit('updateChat', socket.username, data);
+        socket.broadcast.to(socket.room).emit('updateChat', socket.username, data);
     });
 
     socket.on('addUser', function (data) {
@@ -47,7 +47,7 @@ module.exports = function (socket, io) {
         }
 
         console.log(socket.username);
-        var user = new schema.User(newUser);
+        var user = new Schema.User(newUser);
         user.save(function (err, user) {
             if (err) {
                 socket.authenticated = false;
